@@ -103,7 +103,7 @@ public class Shell {
     public void setOutputStream(OutputStream os) {
         channel.setOutputStream(os);
     }
-    
+
     public OutputStream getOutputStream() throws IOException {
         return channel.getOutputStream();
     }

@@ -13,16 +13,21 @@ class KeyGen {
     public void generate() {
         String _type = null;
         int type = 0;
-        _type = JOptionPane.showInputDialog("Choose between rsa and dsa", "rsa");
+        _type = JOptionPane.showInputDialog("Choose between rsa, dsa or ecdsa", "rsa");
         if (_type.toLowerCase().equals("rsa")) {
             type = KeyPair.RSA;
         } else if (_type.toLowerCase().equals("dsa")) {
             type = KeyPair.DSA;
+        } else if (_type.toLowerCase().equals("ecdsa")) {
+            type = KeyPair.ECDSA;
         } else {
             System.err.println("Enter dsa or rsa");
 
             System.exit(-1);
         }
+        int keyLength = 0;
+        String _keyLength = JOptionPane.showInputDialog("Set key length");
+        keyLength = Integer.parseInt(_keyLength);
         String filepath = null;
 
         JFileChooser chooser = new JFileChooser();
@@ -53,7 +58,7 @@ class KeyGen {
         }
 
         try {
-            KeyPair kpair = KeyPair.genKeyPair(jsch, type, 4096);
+            KeyPair kpair = KeyPair.genKeyPair(jsch, type, keyLength);
             kpair.setPassphrase(passphrase);
             kpair.writePrivateKey(filepath);
             kpair.writePublicKey(filepath + ".pub", comment);
