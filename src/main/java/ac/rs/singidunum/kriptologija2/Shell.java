@@ -1,15 +1,26 @@
 package ac.rs.singidunum.kriptologija2;
 
 import com.jcraft.jsch.*;
-import java.awt.*;
+import java.awt.HeadlessException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.swing.*;
 
 public class Shell {
 
-    public static void main(String[] arg) {
+    private JSch jsch = null;
+    private Session session = null;
+    private Channel channel = null;
+
+    public Shell() {
+
+    }
+
+    public void shell() {
 
         try {
-            JSch jsch = new JSch();
+            jsch = new JSch();
 
             JFileChooser chooser = new JFileChooser();
             chooser.setDialogTitle("Choose your known_hosts(ex. ~/.ssh/known_hosts)");
@@ -35,17 +46,15 @@ public class Shell {
             }
 
             String host = null;
-            if (arg.length > 0) {
-                host = arg[0];
-            } else {
-                host = JOptionPane.showInputDialog("Enter username@hostname",
-                        System.getProperty("user.name")
-                        + "@localhost");
-            }
+
+            host = JOptionPane.showInputDialog("Enter username@hostname",
+                    System.getProperty("user.name")
+                    + "@localhost");
+
             String user = host.substring(0, host.indexOf('@'));
             host = host.substring(host.indexOf('@') + 1);
 
-            Session session = jsch.getSession(user, host, 22);
+            session = jsch.getSession(user, host, 22);
 
             // username and password will be given via UserInfo interface.
             UserInfo ui = new MyUserInfo();
@@ -55,7 +64,7 @@ public class Shell {
             // In adding to known_hosts file, host names will be hashed. 
             session.setConfig("HashKnownHosts",  "yes");
              */
-            session.setConfig("StrictHostKeyChecking","yes");
+            session.setConfig("StrictHostKeyChecking", "yes");
             session.connect();
 
             {
@@ -66,123 +75,37 @@ public class Shell {
                         + hk.getFingerPrint(jsch));
             }
 
-            Channel channel = session.openChannel("shell");
+            channel = session.openChannel("shell");
 
             channel.setInputStream(System.in);
             channel.setOutputStream(System.out);
 
             channel.connect();
-        } catch (Exception e) {
+
+        } catch (JSchException | HeadlessException e) {
             System.out.println(e);
         }
     }
 
-    public static class MyUserInfo implements UserInfo, UIKeyboardInteractive {
-
-        @Override
-        public String getPassword() {
-            return passwd;
-        }
-
-        @Override
-        public boolean promptYesNo(String str) {
-            Object[] options = {"yes", "no"};
-            int foo = JOptionPane.showOptionDialog(null,
-                    str,
-                    "Warning",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
-                    null, options, options[0]);
-            return foo == 0;
-        }
-
-        String passwd;
-        JTextField passwordField = (JTextField) new JPasswordField(20);
-
-        @Override
-        public String getPassphrase() {
-            return null;
-        }
-
-        @Override
-        public boolean promptPassphrase(String message) {
-            return true;
-        }
-
-        @Override
-        public boolean promptPassword(String message) {
-            Object[] ob = {passwordField};
-            int result
-                    = JOptionPane.showConfirmDialog(null, ob, message,
-                            JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.OK_OPTION) {
-                passwd = passwordField.getText();
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public void showMessage(String message) {
-            JOptionPane.showMessageDialog(null, message);
-        }
-        final GridBagConstraints gbc
-                = new GridBagConstraints(0, 0, 1, 1, 1, 1,
-                        GridBagConstraints.NORTHWEST,
-                        GridBagConstraints.NONE,
-                        new Insets(0, 0, 0, 0), 0, 0);
-        private Container panel;
-
-        @Override
-        public String[] promptKeyboardInteractive(String destination,
-                String name,
-                String instruction,
-                String[] prompt,
-                boolean[] echo) {
-            panel = new JPanel();
-            panel.setLayout(new GridBagLayout());
-
-            gbc.weightx = 1.0;
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
-            gbc.gridx = 0;
-            panel.add(new JLabel(instruction), gbc);
-            gbc.gridy++;
-
-            gbc.gridwidth = GridBagConstraints.RELATIVE;
-
-            JTextField[] texts = new JTextField[prompt.length];
-            for (int i = 0; i < prompt.length; i++) {
-                gbc.fill = GridBagConstraints.NONE;
-                gbc.gridx = 0;
-                gbc.weightx = 1;
-                panel.add(new JLabel(prompt[i]), gbc);
-
-                gbc.gridx = 1;
-                gbc.fill = GridBagConstraints.HORIZONTAL;
-                gbc.weighty = 1;
-                if (echo[i]) {
-                    texts[i] = new JTextField(20);
-                } else {
-                    texts[i] = new JPasswordField(20);
-                }
-                panel.add(texts[i], gbc);
-                gbc.gridy++;
-            }
-
-            if (JOptionPane.showConfirmDialog(null, panel,
-                    destination + ": " + name,
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE)
-                    == JOptionPane.OK_OPTION) {
-                String[] response = new String[prompt.length];
-                for (int i = 0; i < prompt.length; i++) {
-                    response[i] = texts[i].getText();
-                }
-                return response;
-            } else {
-                return null;  // cancel
-            }
-        }
+    public void disconnect() {
+        channel.disconnect();
+        session.disconnect();
     }
+
+    public void setInputStream(InputStream in) {
+        channel.setInputStream(in);
+    }
+
+    public InputStream getInputStream() throws IOException {
+        return channel.getInputStream();
+    }
+
+    public void setOutputStream(OutputStream os) {
+        channel.setOutputStream(os);
+    }
+    
+    public OutputStream getOutputStream() throws IOException {
+        return channel.getOutputStream();
+    }
+
 }

@@ -1,37 +1,16 @@
 package ac.rs.singidunum.kriptologija2;
 
 import com.jcraft.jsch.*;
+import java.io.IOException;
 import javax.swing.*;
 
 class KeyGen {
 
-    public static void main(String[] arg) {
-        /*
-        if (arg.length < 3) {
-            System.err.println(
-                    "usage: java KeyGen rsa output_keyfile comment\n"
-                    + "       java KeyGen dsa  output_keyfile comment");
-            System.exit(-1);
-        }
-    
-        String _type = arg[0];
-        int type = 0;
-        if (_type.equals("rsa")) {
-            type = KeyPair.RSA;
-        } else if (_type.equals("dsa")) {
-            type = KeyPair.DSA;
-        } else {
-            System.err.println(
-                    "usage: java KeyGen rsa output_keyfile comment\n"
-                    + "       java KeyGen dsa  output_keyfile comment");
-            System.exit(-1);
-        }
-        String filename = arg[1];
-        String comment = arg[2];
-         */
-        
-    
-       
+    public KeyGen() {
+
+    }
+
+    public void generate() {
         String _type = null;
         int type = 0;
         _type = JOptionPane.showInputDialog("Choose between rsa and dsa", "rsa");
@@ -45,19 +24,19 @@ class KeyGen {
             System.exit(-1);
         }
         String filepath = null;
-        
+
         JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("chooser");
+        chooser.setDialogTitle("Select path where to create keys");
         chooser.setFileHidingEnabled(false);
 
-        int returnVal = chooser.showDialog(null, null);
+        int returnVal = chooser.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             System.out.println("You chose "
                     + chooser.getSelectedFile().getAbsolutePath() + ".");
             filepath = chooser.getSelectedFile().getAbsolutePath();
 
         }
-        
+
         String comment = null;
         comment = JOptionPane.showInputDialog("Comment");
 
@@ -80,9 +59,9 @@ class KeyGen {
             kpair.writePublicKey(filepath + ".pub", comment);
             System.out.println("Finger print: " + kpair.getFingerPrint());
             kpair.dispose();
-        } catch (Exception e) {
+        } catch (JSchException | IOException e) {
             System.out.println(e);
         }
-        System.exit(0);
+
     }
 }
