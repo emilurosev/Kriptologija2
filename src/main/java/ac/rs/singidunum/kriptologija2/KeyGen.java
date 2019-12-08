@@ -28,8 +28,8 @@ class KeyGen {
         int keyLength = 0;
         String _keyLength = JOptionPane.showInputDialog("Set key length");
         keyLength = Integer.parseInt(_keyLength);
+        
         String filepath = null;
-
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Select path where to create keys");
         chooser.setFileHidingEnabled(false);

@@ -15,14 +15,14 @@ public class Permissions {
     public static void setPermissions() {
 
         try {
-            Set<PosixFilePermission> permsForFolder = new HashSet<PosixFilePermission>();
+            Set<PosixFilePermission> permsForFolder = new HashSet<>();
             permsForFolder.add(PosixFilePermission.OWNER_READ);
             permsForFolder.add(PosixFilePermission.OWNER_WRITE);
             permsForFolder.add(PosixFilePermission.OWNER_EXECUTE);
-            Set<PosixFilePermission> permsForFiles = new HashSet<PosixFilePermission>();
+            Set<PosixFilePermission> permsForFiles = new HashSet<>();
             permsForFiles.add(PosixFilePermission.OWNER_READ);
             permsForFiles.add(PosixFilePermission.OWNER_WRITE);
-            String path = "";
+            String path = null;
             JFileChooser chooser = new JFileChooser();
             chooser.setDialogTitle("Choose .ssh folder");
             chooser.setFileHidingEnabled(false);
