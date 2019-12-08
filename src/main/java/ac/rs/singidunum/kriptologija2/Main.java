@@ -62,6 +62,7 @@ public class Main extends javax.swing.JFrame {
         jButtonClear = new javax.swing.JButton();
         jButtonEnter = new javax.swing.JButton();
         jButtonDisconnect = new javax.swing.JButton();
+        jButtonSetPermissions = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -144,6 +145,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jButtonSetPermissions.setText("Set Permissions");
+        jButtonSetPermissions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSetPermissionsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,7 +171,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButtonPublicKeyAuth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonShell, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonExchangeKeys, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonGenerateKeys, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonGenerateKeys, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonSetPermissions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -177,7 +186,9 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jButtonShell)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonPublicKeyAuth)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSetPermissions)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -246,6 +257,10 @@ public class Main extends javax.swing.JFrame {
         jTextArea3.setText(null);
     }//GEN-LAST:event_jButtonClearActionPerformed
 
+    private void jButtonSetPermissionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetPermissionsActionPerformed
+        Permissions.setPermissions();
+    }//GEN-LAST:event_jButtonSetPermissionsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -290,6 +305,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButtonExchangeKeys;
     private javax.swing.JButton jButtonGenerateKeys;
     private javax.swing.JButton jButtonPublicKeyAuth;
+    private javax.swing.JButton jButtonSetPermissions;
     private javax.swing.JButton jButtonShell;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JScrollPane jScrollPane1;
