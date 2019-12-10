@@ -96,4 +96,8 @@ public class UserAuthPubKey {
         channel.disconnect();
         session.disconnect();
     }
+    
+    public boolean isConnected() {
+        return channel.isConnected();
+    }
 }

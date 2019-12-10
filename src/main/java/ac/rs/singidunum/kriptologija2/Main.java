@@ -24,9 +24,6 @@ public class Main extends javax.swing.JFrame {
     private Shell shell = null;
     private UserAuthPubKey userAuthPubKey = null;
 
-    private boolean openedShell = false;
-    private boolean openedUserAuthPubKey = false;
-
     public Main() {
 
         keyGen = new KeyGen();
@@ -35,6 +32,8 @@ public class Main extends javax.swing.JFrame {
         userAuthPubKey = new UserAuthPubKey();
 
         initComponents();
+        jButtonDisconnect.setEnabled(false);
+        jButtonEnter.setEnabled(false);
 
     }
 
@@ -159,15 +158,15 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                        .addComponent(jTextField1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEnter)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonClear)
+                        .addComponent(jButtonDisconnect)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDisconnect))
+                        .addComponent(jButtonClear))
                     .addComponent(jButtonPublicKeyAuth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonShell, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonExchangeKeys, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,12 +212,18 @@ public class Main extends javax.swing.JFrame {
 
     private void jButtonShellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShellActionPerformed
         shell.shell();
-        openedShell = true;
+        if (shell.isConnected()) {
+            jButtonDisconnect.setEnabled(true);
+            jButtonEnter.setEnabled(true);
+        }
     }//GEN-LAST:event_jButtonShellActionPerformed
 
     private void jButtonPublicKeyAuthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPublicKeyAuthActionPerformed
         userAuthPubKey.authPubKey();
-        openedUserAuthPubKey = true;
+        if (userAuthPubKey.isConnected()) {
+            jButtonDisconnect.setEnabled(true);
+            jButtonEnter.setEnabled(true);
+        }
     }//GEN-LAST:event_jButtonPublicKeyAuthActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -226,22 +231,20 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButtonDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisconnectActionPerformed
-        if (openedShell) {
+        if (shell.isConnected()) {
             shell.disconnect();
-            openedShell = false;
             System.out.println("SHELL CLOSED");
-
         }
-        if (openedUserAuthPubKey) {
+        if (userAuthPubKey.isConnected()) {
             userAuthPubKey.disconnect();
-            openedUserAuthPubKey = false;
             System.out.println("USER PUB KEY AUTH CLOSED");
-
         }
+        jButtonDisconnect.setEnabled(false);
+        jButtonEnter.setEnabled(false);
     }//GEN-LAST:event_jButtonDisconnectActionPerformed
 
     private void jButtonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnterActionPerformed
-        if (!jTextField1.getText().equals("") && openedShell) {
+        if ((!jTextField1.getText().equals("") && shell.isConnected())) {
 
             String str = jTextField1.getText() + "\n";
 
@@ -289,12 +292,12 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             main.setVisible(true);
         });
+
         /*
         TextAreaOutputStream taos = new TextAreaOutputStream(main.jTextArea3);
         PrintStream out = new PrintStream(taos);
         System.setOut(out);
         System.setErr(out);*/
-
     }
 
 

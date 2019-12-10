@@ -107,5 +107,9 @@ public class Shell {
     public OutputStream getOutputStream() throws IOException {
         return channel.getOutputStream();
     }
+    
+    public boolean isConnected() {
+        return channel.isConnected();
+    }
 
 }
