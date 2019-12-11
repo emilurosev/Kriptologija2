@@ -71,9 +71,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jButtonSftp" max="32767" attributes="0"/>
+                  <Component id="jButtonConfig" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jTextField1" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -86,9 +88,9 @@
                   <Component id="jButtonPublicKeyAuth" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButtonShell" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButtonExchangeKeys" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jButtonGenerateKeys" max="32767" attributes="0"/>
                   <Component id="jButtonSetPermissions" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jScrollPane3" pref="489" max="32767" attributes="0"/>
+                  <Component id="jButtonGenerateKeys" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" alignment="0" pref="567" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -98,17 +100,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jButtonGenerateKeys" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="jButtonExchangeKeys" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="jButtonShell" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jButtonPublicKeyAuth" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonSftp" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonGenerateKeys" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonExchangeKeys" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonSetPermissions" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane3" pref="398" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonConfig" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane3" pref="459" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -124,7 +130,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jButtonGenerateKeys">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Generate keys"/>
+        <Property name="text" type="java.lang.String" value="Generate authentication key pair"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGenerateKeysActionPerformed"/>
@@ -132,7 +138,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonExchangeKeys">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Exchange keys"/>
+        <Property name="text" type="java.lang.String" value="Exchange authentication keys"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExchangeKeysActionPerformed"/>
@@ -140,7 +146,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonShell">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Shell"/>
+        <Property name="text" type="java.lang.String" value="SSH with password authentication"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonShellActionPerformed"/>
@@ -148,7 +154,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonPublicKeyAuth">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Public key auth"/>
+        <Property name="text" type="java.lang.String" value="SSH with public key authentication"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPublicKeyAuthActionPerformed"/>
@@ -200,10 +206,26 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonSetPermissions">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Set Permissions"/>
+        <Property name="text" type="java.lang.String" value="Set correct permissions"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSetPermissionsActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonConfig">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Set configuration"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConfigActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonSftp">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sftp "/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSftpActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

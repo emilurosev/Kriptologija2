@@ -12,7 +12,7 @@ public class Shell {
     private JSch jsch = null;
     private Session session = null;
     private Channel channel = null;
-    
+
     private boolean isConnected = false;
 
     public Shell() {
@@ -110,7 +110,7 @@ public class Shell {
     public OutputStream getOutputStream() throws IOException {
         return channel.getOutputStream();
     }
-    
+
     public boolean isConnected() {
         return isConnected;
     }

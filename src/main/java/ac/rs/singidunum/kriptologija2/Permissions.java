@@ -22,8 +22,9 @@ public class Permissions {
             Set<PosixFilePermission> permsForFiles = new HashSet<>();
             permsForFiles.add(PosixFilePermission.OWNER_READ);
             permsForFiles.add(PosixFilePermission.OWNER_WRITE);
-            String path = "/home/"+System.getProperty("user.name")+"/.ssh";
-            /*
+            //String path = "/home/"+System.getProperty("user.name")+"/.ssh";
+            String path = null;
+
             JFileChooser chooser = new JFileChooser();
             chooser.setDialogTitle("Choose .ssh folder");
             chooser.setFileHidingEnabled(false);
@@ -34,7 +35,7 @@ public class Permissions {
                         + chooser.getSelectedFile().getAbsolutePath() + ".");
                 path = chooser.getSelectedFile().getAbsolutePath();
 
-            }*/
+            }
 
             File folder = new File(path);
             Files.setPosixFilePermissions(folder.toPath(), permsForFolder);

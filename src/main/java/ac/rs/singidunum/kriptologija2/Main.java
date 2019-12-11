@@ -23,6 +23,7 @@ public class Main extends javax.swing.JFrame {
     private KeyExchange keyExchange = null;
     private Shell shell = null;
     private UserAuthPubKey userAuthPubKey = null;
+    private Sftp sftp = null;
 
     public Main() {
 
@@ -32,10 +33,12 @@ public class Main extends javax.swing.JFrame {
         keyExchange = new KeyExchange();
         shell = new Shell();
         userAuthPubKey = new UserAuthPubKey();
+        sftp = new Sftp();
 
         jButtonDisconnect.setEnabled(false);
         jButtonEnter.setEnabled(false);
         jTextArea3.setEditable(false);
+        jTextArea3.setText("Welcome!");
 
     }
 
@@ -64,6 +67,8 @@ public class Main extends javax.swing.JFrame {
         jButtonEnter = new javax.swing.JButton();
         jButtonDisconnect = new javax.swing.JButton();
         jButtonSetPermissions = new javax.swing.JButton();
+        jButtonConfig = new javax.swing.JButton();
+        jButtonSftp = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -87,28 +92,28 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple SSH Client by Emil Urosev");
 
-        jButtonGenerateKeys.setText("Generate keys");
+        jButtonGenerateKeys.setText("Generate authentication key pair");
         jButtonGenerateKeys.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGenerateKeysActionPerformed(evt);
             }
         });
 
-        jButtonExchangeKeys.setText("Exchange keys");
+        jButtonExchangeKeys.setText("Exchange authentication keys");
         jButtonExchangeKeys.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExchangeKeysActionPerformed(evt);
             }
         });
 
-        jButtonShell.setText("Shell");
+        jButtonShell.setText("SSH with password authentication");
         jButtonShell.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonShellActionPerformed(evt);
             }
         });
 
-        jButtonPublicKeyAuth.setText("Public key auth");
+        jButtonPublicKeyAuth.setText("SSH with public key authentication");
         jButtonPublicKeyAuth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPublicKeyAuthActionPerformed(evt);
@@ -146,10 +151,24 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButtonSetPermissions.setText("Set Permissions");
+        jButtonSetPermissions.setText("Set correct permissions");
         jButtonSetPermissions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSetPermissionsActionPerformed(evt);
+            }
+        });
+
+        jButtonConfig.setText("Set configuration");
+        jButtonConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfigActionPerformed(evt);
+            }
+        });
+
+        jButtonSftp.setText("Sftp ");
+        jButtonSftp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSftpActionPerformed(evt);
             }
         });
 
@@ -157,10 +176,12 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonSftp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonConfig, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jTextField1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEnter)
@@ -168,29 +189,33 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jButtonDisconnect)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonClear))
-                    .addComponent(jButtonPublicKeyAuth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonShell, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonExchangeKeys, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonPublicKeyAuth, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonShell, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonExchangeKeys, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonSetPermissions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonGenerateKeys, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonSetPermissions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonGenerateKeys)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonExchangeKeys)
-                .addGap(18, 18, 18)
                 .addComponent(jButtonShell)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPublicKeyAuth)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSftp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonGenerateKeys)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExchangeKeys)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSetPermissions)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonConfig)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,6 +301,14 @@ public class Main extends javax.swing.JFrame {
         Permissions.setPermissions();
     }//GEN-LAST:event_jButtonSetPermissionsActionPerformed
 
+    private void jButtonConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfigActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonConfigActionPerformed
+
+    private void jButtonSftpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSftpActionPerformed
+        sftp.connect();
+    }//GEN-LAST:event_jButtonSftpActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -304,22 +337,24 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             main.setVisible(true);
         });
-
+        /*
         TextAreaOutputStream taos = new TextAreaOutputStream(main.jTextArea3);
         PrintStream out = new PrintStream(taos);
         System.setOut(out);
-        System.setErr(out);
+        System.setErr(out);*/
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClear;
+    private javax.swing.JButton jButtonConfig;
     private javax.swing.JButton jButtonDisconnect;
     private javax.swing.JButton jButtonEnter;
     private javax.swing.JButton jButtonExchangeKeys;
     private javax.swing.JButton jButtonGenerateKeys;
     private javax.swing.JButton jButtonPublicKeyAuth;
     private javax.swing.JButton jButtonSetPermissions;
+    private javax.swing.JButton jButtonSftp;
     private javax.swing.JButton jButtonShell;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JScrollPane jScrollPane1;
