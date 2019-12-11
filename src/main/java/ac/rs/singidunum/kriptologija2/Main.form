@@ -110,9 +110,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonExchangeKeys" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButtonSetPermissions" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jButtonConfig" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonSetPermissions" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jScrollPane3" pref="459" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>

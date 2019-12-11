@@ -211,9 +211,9 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonExchangeKeys)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonSetPermissions)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonConfig)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSetPermissions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -271,7 +271,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDisconnectActionPerformed
 
     private void jButtonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnterActionPerformed
-        if ((!jTextField1.getText().equals("") && shell.isConnected())) {
+        /*if ((!jTextField1.getText().equals("") && shell.isConnected())) {
 
             String str = jTextField1.getText() + "\n";
 
@@ -289,8 +289,8 @@ public class Main extends javax.swing.JFrame {
             userAuthPubKey.setInputStream(is);
 
             jTextField1.setText(null);
-
-        }
+        
+        }*/
     }//GEN-LAST:event_jButtonEnterActionPerformed
 
     private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
