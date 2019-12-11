@@ -2,6 +2,9 @@ package ac.rs.singidunum.kriptologija2;
 
 import com.jcraft.jsch.*;
 import java.awt.HeadlessException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.swing.*;
 
 public class UserAuthPubKey {
@@ -9,6 +12,8 @@ public class UserAuthPubKey {
     private JSch jsch = null;
     private Session session = null;
     private Channel channel = null;
+
+    private boolean isConnected = false;
 
     public UserAuthPubKey() {
 
@@ -87,6 +92,8 @@ public class UserAuthPubKey {
             channel.setOutputStream(System.out);
 
             channel.connect();
+
+            isConnected = channel.isConnected();
         } catch (JSchException | HeadlessException e) {
             System.out.println(e);
         }
@@ -96,8 +103,24 @@ public class UserAuthPubKey {
         channel.disconnect();
         session.disconnect();
     }
-    
+
+    public void setInputStream(InputStream in) {
+        channel.setInputStream(in);
+    }
+
+    public InputStream getInputStream() throws IOException {
+        return channel.getInputStream();
+    }
+
+    public void setOutputStream(OutputStream os) {
+        channel.setOutputStream(os);
+    }
+
+    public OutputStream getOutputStream() throws IOException {
+        return channel.getOutputStream();
+    }
+
     public boolean isConnected() {
-        return channel.isConnected();
+        return isConnected;
     }
 }

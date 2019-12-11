@@ -26,14 +26,16 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
 
+        initComponents();
+
         keyGen = new KeyGen();
         keyExchange = new KeyExchange();
         shell = new Shell();
         userAuthPubKey = new UserAuthPubKey();
 
-        initComponents();
         jButtonDisconnect.setEnabled(false);
         jButtonEnter.setEnabled(false);
+        jTextArea3.setEditable(false);
 
     }
 
@@ -254,6 +256,16 @@ public class Main extends javax.swing.JFrame {
             jTextField1.setText(null);
 
         }
+        if ((!jTextField1.getText().equals("") && userAuthPubKey.isConnected())) {
+
+            String str = jTextField1.getText() + "\n";
+
+            InputStream is = new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
+            userAuthPubKey.setInputStream(is);
+
+            jTextField1.setText(null);
+
+        }
     }//GEN-LAST:event_jButtonEnterActionPerformed
 
     private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
@@ -293,11 +305,10 @@ public class Main extends javax.swing.JFrame {
             main.setVisible(true);
         });
 
-        /*
         TextAreaOutputStream taos = new TextAreaOutputStream(main.jTextArea3);
         PrintStream out = new PrintStream(taos);
         System.setOut(out);
-        System.setErr(out);*/
+        System.setErr(out);
     }
 
 

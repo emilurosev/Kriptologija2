@@ -12,6 +12,8 @@ public class Shell {
     private JSch jsch = null;
     private Session session = null;
     private Channel channel = null;
+    
+    private boolean isConnected = false;
 
     public Shell() {
 
@@ -82,6 +84,7 @@ public class Shell {
 
             channel.connect();
 
+            isConnected = channel.isConnected();
         } catch (JSchException | HeadlessException e) {
             System.out.println(e);
         }
@@ -109,7 +112,7 @@ public class Shell {
     }
     
     public boolean isConnected() {
-        return channel.isConnected();
+        return isConnected;
     }
 
 }
