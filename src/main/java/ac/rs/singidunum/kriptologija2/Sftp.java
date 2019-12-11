@@ -38,6 +38,18 @@ public class Sftp {
                 System.out.println("");
             }
 
+            JFileChooser chooser2 = new JFileChooser();
+            chooser2.setDialogTitle("Choose your privatekey(ex. ~/.ssh/id_dsa)");
+            chooser2.setFileHidingEnabled(false);
+            int returnVal2 = chooser2.showOpenDialog(null);
+            if (returnVal2 == JFileChooser.APPROVE_OPTION) {
+                System.out.println("You chose "
+                        + chooser2.getSelectedFile().getAbsolutePath() + ".");
+                jsch.addIdentity(chooser2.getSelectedFile().getAbsolutePath()
+                //			 , "passphrase"
+                );
+            }
+
             String host = null;
 
             host = JOptionPane.showInputDialog("Enter username@hostname",

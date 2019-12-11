@@ -25,25 +25,13 @@ public class UserAuthPubKey {
             jsch = new JSch();
 
             JFileChooser chooser = new JFileChooser();
-            chooser.setDialogTitle("Choose your privatekey(ex. ~/.ssh/id_dsa)");
+            chooser.setDialogTitle("Choose your known_hosts(ex. ~/.ssh/known_hosts)");
             chooser.setFileHidingEnabled(false);
             int returnVal = chooser.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 System.out.println("You chose "
                         + chooser.getSelectedFile().getAbsolutePath() + ".");
-                jsch.addIdentity(chooser.getSelectedFile().getAbsolutePath()
-                //			 , "passphrase"
-                );
-            }
-
-            JFileChooser chooser2 = new JFileChooser();
-            chooser2.setDialogTitle("Choose your known_hosts(ex. ~/.ssh/known_hosts)");
-            chooser2.setFileHidingEnabled(false);
-            int returnVal2 = chooser2.showOpenDialog(null);
-            if (returnVal2 == JFileChooser.APPROVE_OPTION) {
-                System.out.println("You chose "
-                        + chooser2.getSelectedFile().getAbsolutePath() + ".");
-                jsch.setKnownHosts(chooser2.getSelectedFile().getAbsolutePath());
+                jsch.setKnownHosts(chooser.getSelectedFile().getAbsolutePath());
             }
 
             HostKeyRepository hkr = jsch.getHostKeyRepository();
@@ -57,6 +45,18 @@ public class UserAuthPubKey {
                             + hk.getFingerPrint(jsch));
                 }
                 System.out.println("");
+            }
+
+            JFileChooser chooser2 = new JFileChooser();
+            chooser2.setDialogTitle("Choose your privatekey(ex. ~/.ssh/id_dsa)");
+            chooser2.setFileHidingEnabled(false);
+            int returnVal2 = chooser2.showOpenDialog(null);
+            if (returnVal2 == JFileChooser.APPROVE_OPTION) {
+                System.out.println("You chose "
+                        + chooser2.getSelectedFile().getAbsolutePath() + ".");
+                jsch.addIdentity(chooser2.getSelectedFile().getAbsolutePath()
+                //			 , "passphrase"
+                );
             }
 
             String host = null;

@@ -165,7 +165,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButtonSftp.setText("Sftp ");
+        jButtonSftp.setText("SFTP with public key authentication");
         jButtonSftp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSftpActionPerformed(evt);
