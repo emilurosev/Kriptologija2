@@ -85,6 +85,11 @@ public class Shell {
             channel.connect();
 
             isConnected = session.isConnected();
+
+            System.out.println();
+            System.out.println("Client version is " + session.getClientVersion());
+            System.out.println("Server version is " + session.getServerVersion());
+            System.out.println();
         } catch (JSchException | HeadlessException e) {
             System.out.println(e);
         }

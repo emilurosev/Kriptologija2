@@ -5,8 +5,6 @@
  */
 package ac.rs.singidunum.kriptologija2;
 
-import javax.swing.JPanel;
-
 /**
  *
  * @author emil
@@ -178,8 +176,6 @@ public class MainFrame extends javax.swing.JFrame {
         shell.shell();
         if (shell.isConnected()) {
             jLabelStatus.setText("Connected!");
-            JPanel t = terminal;
-            t.setVisible(true);
         }
     }//GEN-LAST:event_jButtonShellActionPerformed
 
@@ -235,6 +231,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         MainFrame mainFrame = new MainFrame();
+
+        mainFrame.getRootPane().requestFocus();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
