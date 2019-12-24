@@ -84,7 +84,7 @@ public class Shell {
 
             channel.connect();
 
-            isConnected = channel.isConnected();
+            isConnected = session.isConnected();
         } catch (JSchException | HeadlessException e) {
             System.out.println(e);
         }

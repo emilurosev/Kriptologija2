@@ -9,6 +9,11 @@ public class Sftp {
     private Session session = null;
     private Channel channel = null;
     private ChannelSftp c = null;
+    private boolean isConnected = false;
+
+    public boolean isConnected() {
+        return isConnected;
+    }
 
     public void connect() {
 
@@ -90,6 +95,8 @@ public class Sftp {
             int level = 0;
 
             while (true) {
+
+
                 out.print("sftp> ");
                 cmds.removeAllElements();
                 i = in.read(buf, 0, 1024);
