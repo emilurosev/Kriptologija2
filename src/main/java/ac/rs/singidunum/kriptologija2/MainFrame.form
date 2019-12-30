@@ -72,6 +72,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelStatus" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jButtonTelnet" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -95,6 +96,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonConfig" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonTelnet" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="jLabelStatus" alignment="3" max="32767" attributes="0"/>
@@ -115,7 +118,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonUserAuthPubKey">
       <Properties>
-        <Property name="text" type="java.lang.String" value="SSH with public key authentication"/>
+        <Property name="text" type="java.lang.String" value="SSH with digital signature authentication"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUserAuthPubKeyActionPerformed"/>
@@ -123,7 +126,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonSftp">
       <Properties>
-        <Property name="text" type="java.lang.String" value="SFTP with public key authentication"/>
+        <Property name="text" type="java.lang.String" value="SFTP with digital signature authentication"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSftpActionPerformed"/>
@@ -167,6 +170,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Not connected!"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonTelnet">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telnet"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonTelnetActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -20,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     private UserAuthPubKey userAuthPubKey = null;
     private Sftp sftp = null;
     private Terminal terminal = null;
+    private Telnet telnet = null;
 
     public MainFrame() {
         initComponents();
@@ -49,6 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
         jButtonConfig = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabelStatus = new javax.swing.JLabel();
+        jButtonTelnet = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuEdit = new javax.swing.JMenu();
@@ -66,14 +68,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonUserAuthPubKey.setText("SSH with public key authentication");
+        jButtonUserAuthPubKey.setText("SSH with digital signature authentication");
         jButtonUserAuthPubKey.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUserAuthPubKeyActionPerformed(evt);
             }
         });
 
-        jButtonSftp.setText("SFTP with public key authentication");
+        jButtonSftp.setText("SFTP with digital signature authentication");
         jButtonSftp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSftpActionPerformed(evt);
@@ -106,6 +108,13 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setText("Connection status:");
 
         jLabelStatus.setText("Not connected!");
+
+        jButtonTelnet.setText("Telnet");
+        jButtonTelnet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTelnetActionPerformed(evt);
+            }
+        });
 
         jMenuFile.setText("File");
         jMenuBar1.add(jMenuFile);
@@ -142,7 +151,8 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelStatus)))
+                        .addComponent(jLabelStatus))
+                    .addComponent(jButtonTelnet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -162,6 +172,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jButtonPermissions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonConfig)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonTelnet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -201,6 +213,15 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButtonPermissionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPermissionsActionPerformed
         Permissions.setPermissions();
     }//GEN-LAST:event_jButtonPermissionsActionPerformed
+
+    private void jButtonTelnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTelnetActionPerformed
+        telnet = new Telnet("192.168.0.19");
+        System.out.println("Got Connection...");
+        telnet.sendCommand("ls ");
+        System.out.println("run command");
+        telnet.disconnect();
+        System.out.println("DONE");
+    }//GEN-LAST:event_jButtonTelnetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,6 +272,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPermissions;
     private javax.swing.JButton jButtonSftp;
     private javax.swing.JButton jButtonShell;
+    private javax.swing.JButton jButtonTelnet;
     private javax.swing.JButton jButtonUserAuthPubKey;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelStatus;
