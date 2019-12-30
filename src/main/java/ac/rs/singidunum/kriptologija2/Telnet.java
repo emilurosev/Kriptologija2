@@ -12,6 +12,7 @@ import org.apache.commons.net.telnet.TerminalTypeOptionHandler;
 import org.apache.commons.net.telnet.SuppressGAOptionHandler;
 import org.apache.commons.net.telnet.InvalidTelnetOptionException;
 import java.util.StringTokenizer;
+import javax.swing.JOptionPane;
 
 /**
  * *
@@ -29,14 +30,16 @@ import java.util.StringTokenizer;
  */
 public class Telnet implements Runnable, TelnetNotificationHandler {
 
-    static TelnetClient tc = null;
+    private static TelnetClient tc = null;
 
-    public static void start() throws IOException {
+    public void start() throws IOException {
         FileOutputStream fout = null;
 
-        String remoteip = "192.168.0.19";
+        String remoteip = JOptionPane.showInputDialog("Enter IP address", "localhost");
 
-        int remoteport = 4444;
+        String remoteportStr = JOptionPane.showInputDialog("Enter port");
+
+        int remoteport = Integer.parseInt(remoteportStr);
 
         try {
             fout = new FileOutputStream("spy.log", true);
@@ -84,7 +87,8 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
 
                 do {
                     try {
-                        ret_read = System.in.read(buff);
+                        //ret_read = System.in.read(buff);
+                        ret_read = System.in.read();
                         if (ret_read > 0) {
                             if ((new String(buff, 0, ret_read)).startsWith("AYT")) {
                                 try {
@@ -146,7 +150,8 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
                                 tc.stopSpyStream();
                             } else {
                                 try {
-                                    outstr.write(buff, 0, ret_read);
+                                    //outstr.write(buff, 0, ret_read);
+                                    outstr.write(ret_read);
                                     outstr.flush();
                                 } catch (Exception e) {
                                     end_loop = true;

@@ -219,7 +219,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButtonTelnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTelnetActionPerformed
         try {
-            Telnet.start();
+            Telnet telnet = new Telnet();
+            telnet.start();
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

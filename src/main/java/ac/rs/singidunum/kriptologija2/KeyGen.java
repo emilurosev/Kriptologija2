@@ -21,7 +21,7 @@ class KeyGen {
         } else if (_type.toLowerCase().equals("ecdsa")) {
             type = KeyPair.ECDSA;
         } else {
-            System.err.println("Enter dsa or rsa");
+            System.err.println("Enter dsa, rsa or ecdsa");
 
             System.exit(-1);
         }
