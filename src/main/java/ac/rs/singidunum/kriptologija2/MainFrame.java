@@ -5,6 +5,10 @@
  */
 package ac.rs.singidunum.kriptologija2;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author emil
@@ -20,7 +24,6 @@ public class MainFrame extends javax.swing.JFrame {
     private UserAuthPubKey userAuthPubKey = null;
     private Sftp sftp = null;
     private Terminal terminal = null;
-    private Telnet telnet = null;
 
     public MainFrame() {
         initComponents();
@@ -215,12 +218,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPermissionsActionPerformed
 
     private void jButtonTelnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTelnetActionPerformed
-        telnet = new Telnet("192.168.0.19");
-        System.out.println("Got Connection...");
-        telnet.sendCommand("ls ");
-        System.out.println("run command");
-        telnet.disconnect();
-        System.out.println("DONE");
+        try {
+            Telnet.start();
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonTelnetActionPerformed
 
     /**
