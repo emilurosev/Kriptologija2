@@ -25,18 +25,12 @@ import java.util.StringTokenizer;
  * and see the result. Type OPT to see a report of the state of the first 25
  * options.
  * <p>
- * @author Bruno D'Avanzo
- **
+ * @author Bruno D'Avanzo *
  */
 public class Telnet implements Runnable, TelnetNotificationHandler {
 
     static TelnetClient tc = null;
 
-    /**
-     * *
-     * Main for the TelnetClientExample.
-     **
-     */
     public static void start() throws IOException {
         FileOutputStream fout = null;
 
@@ -73,7 +67,7 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
 
                 Thread reader = new Thread(new Telnet());
                 tc.registerNotifHandler(new Telnet());
-                System.out.println("TelnetClientExample");
+                System.out.println("Telnet Client");
                 System.out.println("Type AYT to send an AYT telnet command");
                 System.out.println("Type OPT to print a report of status of options (0-24)");
                 System.out.println("Type REGISTER to register a new SimpleOptionHandler");
@@ -206,8 +200,7 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
     /**
      * *
      * Reader thread. Reads lines from the TelnetClient and echoes them on the
-     * screen.
-     **
+     * screen. *
      */
     public void run() {
         InputStream instr = tc.getInputStream();
