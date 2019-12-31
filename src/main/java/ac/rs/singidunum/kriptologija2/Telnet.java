@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.apache.commons.net.telnet.TelnetClient;
 import org.apache.commons.net.telnet.TelnetNotificationHandler;
 import org.apache.commons.net.telnet.SimpleOptionHandler;
@@ -84,11 +85,30 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
 
                 byte[] buff = new byte[1024];
                 int ret_read = 0;
+                ArrayList<Integer> quitCheck = new ArrayList<>();
 
                 do {
                     try {
                         //ret_read = System.in.read(buff);
                         ret_read = System.in.read();
+                        quitCheck.add(ret_read);
+                        System.out.println(quitCheck);
+                        if (quitCheck.get(quitCheck.size() - 1) == 10) {
+                            if (quitCheck.get(quitCheck.size() - 2) == 116) {
+                                if (quitCheck.get(quitCheck.size() - 3) == 105) {
+                                    if (quitCheck.get(quitCheck.size() - 4) == 117) {
+                                        if (quitCheck.get(quitCheck.size() - 5) == 113) {
+                                            outstr.write(ret_read);
+                                            outstr.flush();
+                                            System.out.println("Disconnecting...");
+                                            end_loop = true;
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         if (ret_read > 0) {
                             if ((new String(buff, 0, ret_read)).startsWith("AYT")) {
                                 try {
