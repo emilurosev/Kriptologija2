@@ -1,34 +1,18 @@
 package ac.rs.singidunum.kriptologija2;
 
+import ac.rs.singidunum.kriptologija2.ciphers.AES;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import org.apache.commons.net.telnet.TelnetClient;
 import org.apache.commons.net.telnet.TelnetNotificationHandler;
-import org.apache.commons.net.telnet.SimpleOptionHandler;
 import org.apache.commons.net.telnet.EchoOptionHandler;
 import org.apache.commons.net.telnet.TerminalTypeOptionHandler;
 import org.apache.commons.net.telnet.SuppressGAOptionHandler;
 import org.apache.commons.net.telnet.InvalidTelnetOptionException;
-import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 
-/**
- * *
- * This is a simple example of use of TelnetClient. An external option handler
- * (SimpleTelnetOptionHandler) is used. Initial configuration requested by
- * TelnetClient will be: WILL ECHO, WILL SUPPRESS-GA, DO SUPPRESS-GA. VT100
- * terminal type will be subnegotiated.
- * <p>
- * Also, use of the sendAYT(), getLocalOptionState(), getRemoteOptionState() is
- * demonstrated. When connected, type AYT to send an AYT command to the server
- * and see the result. Type OPT to see a report of the state of the first 25
- * options.
- * <p>
- * @author Bruno D'Avanzo *
- */
 public class Telnet implements Runnable, TelnetNotificationHandler {
 
     private static TelnetClient tc = null;
@@ -71,13 +55,7 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
 
                 Thread reader = new Thread(new Telnet());
                 tc.registerNotifHandler(new Telnet());
-                System.out.println("Telnet Client");
-                System.out.println("Type AYT to send an AYT telnet command");
-                System.out.println("Type OPT to print a report of status of options (0-24)");
-                System.out.println("Type REGISTER to register a new SimpleOptionHandler");
-                System.out.println("Type UNREGISTER to unregister an OptionHandler");
-                System.out.println("Type SPY to register the spy (connect to port 3333 to spy)");
-                System.out.println("Type UNSPY to stop spying the connection");
+                System.out.println("Welcome to Telnet Client");
                 System.out.println("");
 
                 reader.start();
@@ -85,100 +63,36 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
 
                 byte[] buff = new byte[1024];
                 int ret_read = 0;
-                ArrayList<Integer> quitCheck = new ArrayList<>();
 
                 do {
                     try {
-                        //ret_read = System.in.read(buff);
-                        ret_read = System.in.read();
-                        quitCheck.add(ret_read);
-                        System.out.println(quitCheck);
-                        if (quitCheck.get(quitCheck.size() - 1) == 10) {
-                            if (quitCheck.get(quitCheck.size() - 2) == 116) {
-                                if (quitCheck.get(quitCheck.size() - 3) == 105) {
-                                    if (quitCheck.get(quitCheck.size() - 4) == 117) {
-                                        if (quitCheck.get(quitCheck.size() - 5) == 113) {
-                                            outstr.write(ret_read);
-                                            outstr.flush();
-                                            System.out.println("Disconnecting...");
-                                            end_loop = true;
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
+                        ret_read = System.in.read(buff);
+                        //ret_read = System.in.read();
                         if (ret_read > 0) {
-                            if ((new String(buff, 0, ret_read)).startsWith("AYT")) {
-                                try {
-                                    System.out.println("Sending AYT");
-
-                                    System.out.println("AYT response:" + tc.sendAYT(5000));
-                                } catch (Exception e) {
-                                    System.err.println("Exception waiting AYT response: " + e.getMessage());
-                                }
-                            } else if ((new String(buff, 0, ret_read)).startsWith("OPT")) {
-                                System.out.println("Status of options:");
-                                for (int ii = 0; ii < 25; ii++) {
-                                    System.out.println("Local Option " + ii + ":" + tc.getLocalOptionState(ii) + " Remote Option " + ii + ":" + tc.getRemoteOptionState(ii));
-                                }
-                            } else if ((new String(buff, 0, ret_read)).startsWith("REGISTER")) {
-                                StringTokenizer st = new StringTokenizer(new String(buff));
-                                try {
-                                    st.nextToken();
-                                    int opcode = (new Integer(st.nextToken())).intValue();
-                                    boolean initlocal = (new Boolean(st.nextToken())).booleanValue();
-                                    boolean initremote = (new Boolean(st.nextToken())).booleanValue();
-                                    boolean acceptlocal = (new Boolean(st.nextToken())).booleanValue();
-                                    boolean acceptremote = (new Boolean(st.nextToken())).booleanValue();
-                                    SimpleOptionHandler opthand = new SimpleOptionHandler(opcode, initlocal, initremote,
-                                            acceptlocal, acceptremote);
-                                    tc.addOptionHandler(opthand);
-                                } catch (Exception e) {
-                                    if (e instanceof InvalidTelnetOptionException) {
-                                        System.err.println("Error registering option: " + e.getMessage());
-                                    } else {
-                                        System.err.println("Invalid REGISTER command.");
-                                        System.err.println("Use REGISTER optcode initlocal initremote acceptlocal acceptremote");
-                                        System.err.println("(optcode is an integer.)");
-                                        System.err.println("(initlocal, initremote, acceptlocal, acceptremote are boolean)");
-                                    }
-                                }
-                            } else if ((new String(buff, 0, ret_read)).startsWith("UNREGISTER")) {
-                                StringTokenizer st = new StringTokenizer(new String(buff));
-                                try {
-                                    st.nextToken();
-                                    int opcode = (new Integer(st.nextToken())).intValue();
-                                    tc.deleteOptionHandler(opcode);
-                                } catch (Exception e) {
-                                    if (e instanceof InvalidTelnetOptionException) {
-                                        System.err.println("Error unregistering option: " + e.getMessage());
-                                    } else {
-                                        System.err.println("Invalid UNREGISTER command.");
-                                        System.err.println("Use UNREGISTER optcode");
-                                        System.err.println("(optcode is an integer)");
-                                    }
-                                }
-                            } else if ((new String(buff, 0, ret_read)).startsWith("SPY")) {
-                                try {
-                                    tc.registerSpyStream(fout);
-                                } catch (Exception e) {
-                                    System.err.println("Error registering the spy");
-                                }
-                            } else if ((new String(buff, 0, ret_read)).startsWith("UNSPY")) {
-                                tc.stopSpyStream();
+                            if (new String(buff, 0, ret_read).equals("quit\n")) {
+                                outstr.write(buff, 0, ret_read);
+                                outstr.flush();
+                                System.out.println("Disconnected...");
+                                end_loop = true;
+                                return;
                             } else {
                                 try {
-                                    //outstr.write(buff, 0, ret_read);
-                                    outstr.write(ret_read);
+                                    String s = new String(buff, 0, ret_read);
+                                    System.out.println(s);
+                                    String encrpytedS = AES.encrypt(s, "password");
+                                    System.out.println(encrpytedS);
+
+                                    //outstr.write(ret_read);
+                                    outstr.write(buff, 0, ret_read);
+
                                     outstr.flush();
-                                } catch (Exception e) {
+                                } catch (IOException e) {
                                     end_loop = true;
                                 }
                             }
                         }
-                    } catch (Exception e) {
+
+                    } catch (IOException e) {
                         System.err.println("Exception while reading keyboard:" + e.getMessage());
                         end_loop = true;
                     }
@@ -186,10 +100,10 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
 
                 try {
                     tc.disconnect();
-                } catch (Exception e) {
+                } catch (IOException e) {
                     System.err.println("Exception while connecting:" + e.getMessage());
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println("Exception while connecting:" + e.getMessage());
                 System.exit(1);
             }
@@ -208,6 +122,7 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
      * <p>
      **
      */
+    @Override
     public void receivedNegotiation(int negotiation_code, int option_code) {
         String command = null;
         if (negotiation_code == TelnetNotificationHandler.RECEIVED_DO) {
@@ -227,6 +142,7 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
      * Reader thread. Reads lines from the TelnetClient and echoes them on the
      * screen. *
      */
+    @Override
     public void run() {
         InputStream instr = tc.getInputStream();
 
