@@ -1,6 +1,7 @@
 package ac.rs.singidunum.kriptologija2;
 
 import ac.rs.singidunum.kriptologija2.ciphers.AES;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
@@ -28,7 +29,7 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
 
         try {
             fout = new FileOutputStream("spy.log", true);
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             System.err.println(
                     "Exception while opening the spy file: "
                     + e.getMessage());
@@ -125,14 +126,21 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
     @Override
     public void receivedNegotiation(int negotiation_code, int option_code) {
         String command = null;
-        if (negotiation_code == TelnetNotificationHandler.RECEIVED_DO) {
-            command = "DO";
-        } else if (negotiation_code == TelnetNotificationHandler.RECEIVED_DONT) {
-            command = "DONT";
-        } else if (negotiation_code == TelnetNotificationHandler.RECEIVED_WILL) {
-            command = "WILL";
-        } else if (negotiation_code == TelnetNotificationHandler.RECEIVED_WONT) {
-            command = "WONT";
+        switch (negotiation_code) {
+            case TelnetNotificationHandler.RECEIVED_DO:
+                command = "DO";
+                break;
+            case TelnetNotificationHandler.RECEIVED_DONT:
+                command = "DONT";
+                break;
+            case TelnetNotificationHandler.RECEIVED_WILL:
+                command = "WILL";
+                break;
+            case TelnetNotificationHandler.RECEIVED_WONT:
+                command = "WONT";
+                break;
+            default:
+                break;
         }
         System.out.println("Received " + command + " for option code " + option_code);
     }
@@ -156,13 +164,13 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
                     System.out.print(new String(buff, 0, ret_read));
                 }
             } while (ret_read >= 0);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Exception while reading socket:" + e.getMessage());
         }
 
         try {
             tc.disconnect();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Exception while closing telnet:" + e.getMessage());
         }
     }
