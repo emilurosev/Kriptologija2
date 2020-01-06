@@ -1,5 +1,6 @@
 package ac.rs.singidunum.kriptologija2.telnetServer;
 
+import ac.rs.singidunum.kriptologija2.ciphers.Aes256;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -64,10 +65,10 @@ public class TelnetClient extends Thread {
 
             String cmd = null;
             while (!_stop && (cmd = r.readLine()) != null) {
-                pso.println(performTelnetCommand(cmd));
-                System.out.println(cmd);
-                System.out.println("Bytes: " + cmd.getBytes());
-                System.out.println(performTelnetCommand(cmd));
+                pso.println(Aes256.encrypt(performTelnetCommand(cmd), Aes256.getPassPhrase()));
+                //System.out.println(cmd);
+                //System.out.println(performTelnetCommand(cmd));
+                System.out.println(Aes256.encrypt(performTelnetCommand(cmd), Aes256.getPassPhrase()));
                 pso.print(getPrompt());
                 pso.flush();
             }
@@ -75,6 +76,8 @@ public class TelnetClient extends Thread {
             return;
         } catch (IOException e) {
             logger.log(Level.WARNING, "An error occurred while handling client input", e);
+        } catch (Exception ex) {
+            Logger.getLogger(TelnetClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             _telnetServer.clientDisconnected(this);
         }

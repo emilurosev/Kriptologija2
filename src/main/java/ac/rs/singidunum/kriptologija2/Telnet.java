@@ -1,11 +1,13 @@
 package ac.rs.singidunum.kriptologija2;
 
-import ac.rs.singidunum.kriptologija2.ciphers.AES;
+import ac.rs.singidunum.kriptologija2.ciphers.Aes256;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.net.telnet.TelnetClient;
 import org.apache.commons.net.telnet.TelnetNotificationHandler;
 import org.apache.commons.net.telnet.EchoOptionHandler;
@@ -78,10 +80,9 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
                                 return;
                             } else {
                                 try {
-                                    String s = new String(buff, 0, ret_read);
-                                    System.out.println(s);
-                                    String encrpytedS = AES.encrypt(s, "password");
-                                    System.out.println(encrpytedS);
+                                    //String s = new String(buff, 0, ret_read);
+                                    //String encrpytedS = Aes256.encrypt(s, Aes256.getPassPhrase());
+                                    //System.out.println(encrpytedS);
 
                                     //outstr.write(ret_read);
                                     outstr.write(buff, 0, ret_read);
@@ -89,6 +90,8 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
                                     outstr.flush();
                                 } catch (IOException e) {
                                     end_loop = true;
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Telnet.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             }
                         }
@@ -161,7 +164,15 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
             do {
                 ret_read = instr.read(buff);
                 if (ret_read > 0) {
-                    System.out.print(new String(buff, 0, ret_read));
+                    String encryptedString = new String(buff, 0, ret_read);
+                    String decryptedString;
+                    try {
+                        decryptedString = Aes256.decrypt(encryptedString, Aes256.getPassPhrase());
+                        System.out.print(decryptedString);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Telnet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 }
             } while (ret_read >= 0);
         } catch (IOException e) {

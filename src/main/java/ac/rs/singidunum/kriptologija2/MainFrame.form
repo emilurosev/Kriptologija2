@@ -173,7 +173,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonTelnet">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Telnet"/>
+        <Property name="text" type="java.lang.String" value="Telnet with AES"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonTelnetActionPerformed"/>

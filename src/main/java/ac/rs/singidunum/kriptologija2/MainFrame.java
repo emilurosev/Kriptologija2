@@ -112,7 +112,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabelStatus.setText("Not connected!");
 
-        jButtonTelnet.setText("Telnet");
+        jButtonTelnet.setText("Telnet with AES");
         jButtonTelnet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTelnetActionPerformed(evt);
