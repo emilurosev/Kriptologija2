@@ -23,7 +23,6 @@ public class MainFrame extends javax.swing.JFrame {
     private Shell shell = null;
     private UserAuthPubKey userAuthPubKey = null;
     private Sftp sftp = null;
-    private Terminal terminal = null;
 
     public MainFrame() {
         initComponents();
@@ -112,7 +111,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabelStatus.setText("Not connected!");
 
-        jButtonTelnet.setText("Telnet with AES");
+        jButtonTelnet.setText("Telnet with AES256 encryption");
         jButtonTelnet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTelnetActionPerformed(evt);
@@ -258,12 +257,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainFrame.getRootPane().requestFocus();
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                mainFrame.setLocationRelativeTo(null);
-                mainFrame.setResizable(false);
-                mainFrame.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            mainFrame.setLocationRelativeTo(null);
+            mainFrame.setResizable(false);
+            mainFrame.setVisible(true);
         });
 
     }
