@@ -1,4 +1,4 @@
-package ac.rs.singidunum.kriptologija2.ciphers;
+package ac.rs.singidunum.kriptologija2.telnetServer.ciphers;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;

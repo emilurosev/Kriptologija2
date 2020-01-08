@@ -1,6 +1,6 @@
 package ac.rs.singidunum.kriptologija2.telnetServer;
 
-import ac.rs.singidunum.kriptologija2.ciphers.Aes256;
+import ac.rs.singidunum.kriptologija2.telnetServer.ciphers.AES;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -56,21 +57,47 @@ public class TelnetClient extends Thread {
             _in = _client.getInputStream();
             _os = _client.getOutputStream();
 
+            AES.generateKey();
+
+            _os.write(AES.getKEY());
+            _os.flush();
+            _os.write(AES.getIV());
+            _os.flush();
+
+            System.out.println("KEY " + Arrays.toString(AES.getKEY()));
+            System.out.println("IV " + Arrays.toString(AES.getIV()));
+
             BufferedReader r = new BufferedReader(new InputStreamReader(_in));
             PrintStream pso = new PrintStream(_os);
-            pso.println("Welcome to the Test Telnet Server, following commands are available...\n");
-            pso.println(getHelpOutput());
-            pso.print(getPrompt());
+            pso.println(new String(AES.encrypt("Welcome to the Test Telnet Server, following commands are available...\n"), "UTF-8"));
             pso.flush();
+            pso.println(new String(AES.encrypt(getHelpOutput()), "UTF-8"));
+            pso.flush();
+            pso.print(new String(AES.encrypt(getPrompt()), "UTF-8"));
+            pso.flush();
+            /*
+            _os.write(AES.encrypt("Welcome to the Test Telnet Server, following commands are available...\n"));
+            System.out.println(Arrays.toString(AES.encrypt("Welcome to the Test Telnet Server, following commands are available...\n")));
+            _os.flush();
+            _os.write(AES.encrypt(getHelpOutput() + "\n"));
+            _os.flush();
+            _os.write(AES.encrypt(getPrompt()));
+            _os.flush();*/
 
             String cmd = null;
             while (!_stop && (cmd = r.readLine()) != null) {
-                pso.println(Aes256.encrypt(performTelnetCommand(cmd), Aes256.getPassPhrase()));
-                //System.out.println(cmd);
-                //System.out.println(performTelnetCommand(cmd));
-                System.out.println(Aes256.encrypt(performTelnetCommand(cmd), Aes256.getPassPhrase()));
-                pso.print(getPrompt());
+                //pso.println(performTelnetCommand(cmd));
+                System.out.println(new String(AES.encrypt(performTelnetCommand(cmd)), "UTF-8"));
+                pso.println(new String(AES.encrypt(performTelnetCommand(cmd)), "UTF-8"));
                 pso.flush();
+                //_os.write(AES.encrypt(performTelnetCommand(cmd) + "\n"));
+                //_os.flush();
+                //System.out.println(Arrays.toString(AES.encrypt(performTelnetCommand(cmd))));
+
+                pso.print(new String(AES.encrypt(getPrompt()), "UTF-8"));
+                pso.flush();
+                //_os.write(AES.encrypt(getPrompt()));
+                //_os.flush();
             }
         } catch (SocketException se) {
             return;

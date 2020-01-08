@@ -1,6 +1,6 @@
 package ac.rs.singidunum.kriptologija2;
 
-import ac.rs.singidunum.kriptologija2.ciphers.Aes256;
+import ac.rs.singidunum.kriptologija2.ciphers.AES;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,6 +15,7 @@ import org.apache.commons.net.telnet.TerminalTypeOptionHandler;
 import org.apache.commons.net.telnet.SuppressGAOptionHandler;
 import org.apache.commons.net.telnet.InvalidTelnetOptionException;
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 
 public class Telnet implements Runnable, TelnetNotificationHandler {
 
@@ -80,11 +81,6 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
                                 return;
                             } else {
                                 try {
-                                    //String s = new String(buff, 0, ret_read);
-                                    //String encrpytedS = Aes256.encrypt(s, Aes256.getPassPhrase());
-                                    //System.out.println(encrpytedS);
-
-                                    //outstr.write(ret_read);
                                     outstr.write(buff, 0, ret_read);
 
                                     outstr.flush();
@@ -156,23 +152,28 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
     @Override
     public void run() {
         InputStream instr = tc.getInputStream();
+        try {
+            byte[] k = instr.readNBytes(32);
+            byte[] iv = instr.readNBytes(16);
+            AES.setKEY(k);
+            AES.setIV(iv);
+            System.out.println("KEY " + Arrays.toString(AES.getKEY()));
+            System.out.println("IV " + Arrays.toString(AES.getIV()));
+            System.out.println();
+        } catch (IOException ex) {
+            Logger.getLogger(Telnet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         try {
             byte[] buff = new byte[1024];
             int ret_read = 0;
-
             do {
                 ret_read = instr.read(buff);
                 if (ret_read > 0) {
-                    String encryptedString = new String(buff, 0, ret_read);
-                    String decryptedString;
-                    try {
-                        decryptedString = Aes256.decrypt(encryptedString, Aes256.getPassPhrase());
-                        System.out.print(decryptedString);
-                    } catch (Exception ex) {
-                        Logger.getLogger(Telnet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
+                    String encrString = new String(buff, 0, ret_read);
+                    System.out.println(encrString);
+                    //byte[] decr = AES.decrypt(encrString.getBytes());
+                    //System.out.print(new String(decr));
                 }
             } while (ret_read >= 0);
         } catch (IOException e) {
@@ -184,5 +185,6 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
         } catch (IOException e) {
             System.err.println("Exception while closing telnet:" + e.getMessage());
         }
+
     }
 }
