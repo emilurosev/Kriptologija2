@@ -53,6 +53,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabelStatus = new javax.swing.JLabel();
         jButtonTelnet = new javax.swing.JButton();
+        jButtonAddToAuthKeys = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuEdit = new javax.swing.JMenu();
@@ -118,6 +119,13 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButtonAddToAuthKeys.setText("Add key to Authorized keys");
+        jButtonAddToAuthKeys.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddToAuthKeysActionPerformed(evt);
+            }
+        });
+
         jMenuFile.setText("File");
         jMenuBar1.add(jMenuFile);
 
@@ -149,12 +157,13 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jButtonKeyExchange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonPermissions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonConfig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jButtonTelnet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelStatus))
-                    .addComponent(jButtonTelnet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonAddToAuthKeys, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -170,6 +179,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jButtonKeyGen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonKeyExchange)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAddToAuthKeys)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPermissions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -225,6 +236,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonTelnetActionPerformed
 
+    private void jButtonAddToAuthKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddToAuthKeysActionPerformed
+        AddKeyToAuthorizedKeys.add();
+    }//GEN-LAST:event_jButtonAddToAuthKeysActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -266,6 +281,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAddToAuthKeys;
     private javax.swing.JButton jButtonConfig;
     private javax.swing.JButton jButtonKeyExchange;
     private javax.swing.JButton jButtonKeyGen;

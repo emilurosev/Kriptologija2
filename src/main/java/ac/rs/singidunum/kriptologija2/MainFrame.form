@@ -66,13 +66,14 @@
                   <Component id="jButtonKeyExchange" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButtonPermissions" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButtonConfig" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Component id="jButtonTelnet" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelStatus" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jButtonTelnet" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButtonAddToAuthKeys" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -91,6 +92,8 @@
               <Component id="jButtonKeyGen" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonKeyExchange" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonAddToAuthKeys" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonPermissions" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -177,6 +180,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonTelnetActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAddToAuthKeys">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add key to Authorized keys"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddToAuthKeysActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

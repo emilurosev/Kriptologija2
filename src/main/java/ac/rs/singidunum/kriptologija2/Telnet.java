@@ -170,9 +170,9 @@ public class Telnet implements Runnable, TelnetNotificationHandler {
             do {
                 ret_read = instr.read(buff);
                 if (ret_read > 0) {
-                    String encrString = new String(buff, 0, ret_read);
+                    String encrString = new String(buff, 0, ret_read, "UTF-8");
                     System.out.println(encrString);
-                    //byte[] decr = AES.decrypt(encrString.getBytes());
+                    //byte[] decr = AES.decrypt(encrString.getBytes("UTF-8"));
                     //System.out.print(new String(decr));
                 }
             } while (ret_read >= 0);
