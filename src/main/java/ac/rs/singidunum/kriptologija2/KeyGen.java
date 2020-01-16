@@ -11,24 +11,34 @@ class KeyGen {
     }
 
     public void generate() {
+        int keyLength = 0;
         String _type = null;
         int type = 0;
-        _type = JOptionPane.showInputDialog("Choose between rsa, dsa or ecdsa", "rsa");
-        if (_type.toLowerCase().equals("rsa")) {
-            type = KeyPair.RSA;
-        } else if (_type.toLowerCase().equals("dsa")) {
-            type = KeyPair.DSA;
-        } else if (_type.toLowerCase().equals("ecdsa")) {
-            type = KeyPair.ECDSA;
-        } else {
-            System.err.println("Enter dsa, rsa or ecdsa");
+        _type = JOptionPane.showInputDialog("Choose asymmetric key algorithm(dsa, rsa, ecdsa).", "default");
+        switch (_type.toLowerCase()) {
+            case "rsa":
+                type = KeyPair.RSA;
+                break;
+            case "dsa":
+                type = KeyPair.DSA;
+                break;
+            case "ecdsa":
+                type = KeyPair.ECDSA;
+                break;
+            case "default":
+                type = KeyPair.RSA;
+                keyLength = 2048;
+                break;
+            default:
+                System.err.println("Algorithm not supported! Choose between dsa, rsa or ecdsa.");
 
-            System.exit(-1);
+                System.exit(-1);
         }
-        int keyLength = 0;
-        String _keyLength = JOptionPane.showInputDialog("Set key length");
-        keyLength = Integer.parseInt(_keyLength);
-        
+        if (keyLength != 2048) {
+            String _keyLength = JOptionPane.showInputDialog("Set key length");
+            keyLength = Integer.parseInt(_keyLength);
+        }
+
         String filepath = null;
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Select path where to create keys");

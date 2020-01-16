@@ -5,6 +5,8 @@
  */
 package ac.rs.singidunum.kriptologija2;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,7 +121,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonAddToAuthKeys.setText("Add key to Authorized keys");
+        jButtonAddToAuthKeys.setText("Add key to Authorized keys*");
         jButtonAddToAuthKeys.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddToAuthKeysActionPerformed(evt);
@@ -276,6 +278,13 @@ public class MainFrame extends javax.swing.JFrame {
             mainFrame.setLocationRelativeTo(null);
             mainFrame.setResizable(false);
             mainFrame.setVisible(true);
+        });
+
+        mainFrame.jButtonConfig.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+            }
         });
 
     }

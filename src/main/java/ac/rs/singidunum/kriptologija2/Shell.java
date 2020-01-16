@@ -62,12 +62,23 @@ public class Shell {
             UserInfo ui = new MyUserInfo();
             session.setUserInfo(ui);
 
-            /*
-            // In adding to known_hosts file, host names will be hashed. 
-            session.setConfig("HashKnownHosts",  "yes");
-             */
-            session.setConfig("StrictHostKeyChecking", "yes");
+            Configuration config = new Configuration();
+            config.setConfigStrong();
+            session.setConfig(config.getConfig());
+
             session.connect();
+
+            System.out.println(session.getConfig("kex"));
+            System.out.println(session.getConfig("cipher.s2c"));
+            System.out.println(session.getConfig("cipher.c2s"));
+            System.out.println(session.getConfig("mac.s2c"));
+            System.out.println(session.getConfig("mac.c2s"));
+            System.out.println(session.getConfig("compression.s2c"));
+            System.out.println(session.getConfig("compression.s2c"));
+            System.out.println(session.getConfig("compression_level"));
+            System.out.println(session.getConfig("server_host_key"));
+
+            System.out.println(session.getConfig("CheckCiphers"));
 
             {
                 HostKey hk = session.getHostKey();
