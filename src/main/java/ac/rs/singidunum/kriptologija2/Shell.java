@@ -63,10 +63,32 @@ public class Shell {
             session.setUserInfo(ui);
 
             Configuration config = new Configuration();
-            config.setConfigStrong();
+
+            System.out.println(MainFrame.getSs());
+
+            switch (MainFrame.getSs()) {
+                case Weak:
+                    config.setConfigWeak();
+                    break;
+                case JSchDefault:
+                    config.setConfigDefault();
+                    break;
+                case Strong:
+                    config.setConfigStrong();
+                    break;
+                case Extreme:
+                    config.setConfigExtreme();
+                    break;
+                default:
+                    config.setConfigStrong();
+                    break;
+            }
+
             session.setConfig(config.getConfig());
 
             session.connect();
+
+            System.out.println("SECURITY CONFIG: ");
 
             System.out.println(session.getConfig("kex"));
             System.out.println(session.getConfig("cipher.s2c"));
@@ -79,6 +101,9 @@ public class Shell {
             System.out.println(session.getConfig("server_host_key"));
 
             System.out.println(session.getConfig("CheckCiphers"));
+
+            System.out.println("END OF SECURITY CONFIG");
+            System.out.println();
 
             {
                 HostKey hk = session.getHostKey();

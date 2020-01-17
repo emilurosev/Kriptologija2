@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -25,6 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Shell shell = null;
     private UserAuthPubKey userAuthPubKey = null;
     private Sftp sftp = null;
+    private static SecurityStrength ss = SecurityStrength.Strong;
 
     public MainFrame() {
         initComponents();
@@ -109,6 +113,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         jButtonConfig.setText("Set security configuration");
+        jButtonConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfigActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Connection status:");
 
@@ -242,6 +251,31 @@ public class MainFrame extends javax.swing.JFrame {
         AddKeyToAuthorizedKeys.add();
     }//GEN-LAST:event_jButtonAddToAuthKeysActionPerformed
 
+    private void jButtonConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfigActionPerformed
+        Object[] options = {"Weak", "JSchDefault", "Strong", "Extreme"};
+        int x = JOptionPane.showOptionDialog(null, "Set security level. Recommended is strong.\nUse weak if you don't care for security.\nUse JschDefault if you trust open-source Java lib JSch.\nUse strong for max strength ciphers, kex, server host key and to hash known hosts.\nIn strong mode zlib compression is added to every transmitted packet with max compression level for extra security\nExtreme mode is same as strong but should only be used for KNOWN servers!", "Security configuration", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[2]);
+        System.out.println(x);
+        if (x != -1) {
+            switch (x) {
+                case 0:
+                    ss = SecurityStrength.Weak;
+                    break;
+                case 1:
+                    ss = SecurityStrength.JSchDefault;
+                    break;
+                case 2:
+                    ss = SecurityStrength.Strong;
+                    break;
+                case 3:
+                    ss = SecurityStrength.Extreme;
+                    break;
+            }
+        } else {
+            //ss = SecurityStrength.Strong;
+        }
+        System.out.println(ss);
+    }//GEN-LAST:event_jButtonConfigActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,13 +314,10 @@ public class MainFrame extends javax.swing.JFrame {
             mainFrame.setVisible(true);
         });
 
-        mainFrame.jButtonConfig.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
+    }
 
-            }
-        });
-
+    public static SecurityStrength getSs() {
+        return ss;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
