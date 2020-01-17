@@ -23,7 +23,7 @@ public class Configuration {
         hashtable.put("compression.s2c", "zlib,zlib@openssh.com");
         hashtable.put("compression.c2s", "zlib,zlib@openssh.com");
         hashtable.put("compression_level", "9");
-        hashtable.put("server_host_key", "ssh-rsa,ecdsa-sha2-nistp521,");
+        hashtable.put("server_host_key", "ssh-rsa,ecdsa-sha2-nistp521");
         hashtable.put("CheckCiphers", "aes256-ctr,aes256-cbc"); //A list of Ciphers which should be first checked for availability. All ciphers in this list which are not working will be removed from the ciphers.c2s and ciphers.s2c before sending these lists to the server in a KEX_INIT message.
     }
 
