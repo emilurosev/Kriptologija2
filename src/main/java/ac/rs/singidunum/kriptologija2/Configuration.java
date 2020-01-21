@@ -8,7 +8,7 @@ public class Configuration {
     private String allSupportedKEX = "diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha256,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521";
     private String allSupportedCiphers = "blowfish-cbc,3des-cbc,aes128-cbc,aes192-cbc,aes256-cbc,aes128-ctr,aes192-ctr,aes256-ctr,3des-ctr,arcfour,arcfour128,arcfour256";
     private String allSupportedMAC = "hmac-md5, hmac-sha1, hmac-md5-96, hmac-sha1-96";
-    private String allSupportedHostKeyTypes = "ssh-dss,ssh-rsa,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521";
+    private String allSupportedHostKeyTypes = "ssh-dss,ssh-rsa,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521"; //server digital signatures
     private String allSupportedCompressionTypes = "zlib,zlib@openssh.com";
 
     //hashtable.put("CheckCiphers", "aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc,3des-ctr,arcfour,arcfour128,arcfour256");
